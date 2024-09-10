@@ -298,8 +298,8 @@ const Products = ({ }) => {
                             <div className="">{item.title}</div>
                             <div className="">{formatter.format(item.price)}</div>
                           </div>
-                          <div onClick={AddItems} className="cursor-pointer px-4 py-4 rounded-full bg-white flex items-center justify-center">
-                            <BsFillCartDashFill onMouseOver={() => selectProduct(item.id)} className='text-primary text-2xl ' />
+                          <div onClick={AddItems} onMouseOver={() => selectProduct(item.id)}  className="cursor-pointer px-4 py-4 rounded-full bg-white flex items-center justify-center">
+                            <BsFillCartDashFill  className='text-primary text-2xl ' />
                           </div>
                         </div>
                       </div>

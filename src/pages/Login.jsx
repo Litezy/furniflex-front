@@ -36,7 +36,7 @@ const Login = () => {
         setTimeout(() => {
             setLoading(false)
             setLogin(true)
-            navigate('/dashboard')
+            navigate('/products')
         }, 3000)
 
 

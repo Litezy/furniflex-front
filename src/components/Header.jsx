@@ -23,7 +23,7 @@ const Header = ({ closeDivRef, furniDiv, topDiv }) => {
     const [sideview, setSideview] = useState(false)
     const navigate = useNavigate()
     const { select = [] } = useSelect();
-    const {login,setLogin} = useSelect()
+    const { login, setLogin } = useSelect()
 
 
     useEffect(() => {
@@ -102,18 +102,18 @@ const Header = ({ closeDivRef, furniDiv, topDiv }) => {
                         <div className="lg:w-[40%] w-[60%] hidden md:flex ">
                             <ul className='flex items-center w-full justify-between'>
                                 {login ?
-                                headers.map((item, index) => {
-                                    return (
-                                        <div onClick={() => selectHeader(index, item.url)} className={`${active === index ? 'border-b border-primary' : ''} cursor-pointer`} key={index}>
-                                            {item.title}</div >
-                                    )
-                                }):
-                                headers.slice(0, headers.length-1).map((item, index) => {
-                                    return (
-                                        <div onClick={() => selectHeader(index, item.url)} className={`${active === index ? 'border-b border-primary' : ''} cursor-pointer`} key={index}>
-                                            {item.title}</div >
-                                    )
-                                })
+                                    headers.map((item, index) => {
+                                        return (
+                                            <div onClick={() => selectHeader(index, item.url)} className={`${active === index ? 'border-b border-primary' : ''} cursor-pointer`} key={index}>
+                                                {item.title}</div >
+                                        )
+                                    }) :
+                                    headers.slice(0, headers.length - 1).map((item, index) => {
+                                        return (
+                                            <div onClick={() => selectHeader(index, item.url)} className={`${active === index ? 'border-b border-primary' : ''} cursor-pointer`} key={index}>
+                                                {item.title}</div >
+                                        )
+                                    })
                                 }
                             </ul>
                         </div>
@@ -128,12 +128,23 @@ const Header = ({ closeDivRef, furniDiv, topDiv }) => {
                                 :
                                 <FaBagShopping onClick={() => navigate('/cart')} className='text-xl  cursor-pointer' />
                             }
-                            <LuLogOut onClick={()=> setLogin(false)} className='text-xl  cursor-pointer' />
-                        </div> : 
-                        <div onClick={()=> navigate('/login')} className="hidden md:block cursor-pointer text-white w-fit px-12 py-2 rounded-lg bg-primary">Login</div>
+                            <LuLogOut onClick={() => setLogin(false)} className='text-xl  cursor-pointer' />
+                        </div> :
+                            <div onClick={() => navigate('/login')} className="hidden md:block cursor-pointer text-white w-fit px-12 py-2 rounded-lg bg-primary">Login</div>
                         }
 
-
+                        {login &&
+                            <div className="md:hidden items-center justify-between lg:w-[12%] w-[15%]  ">
+                                {Array.isArray(select) && select.length > 0 ?
+                                    <div className="relative flex itrems-start  w-8 py-2 ">
+                                        <FaBagShopping onClick={() => navigate('/cart')} className='text-xl cursor-pointer' />
+                                        <div className=" text-xs px-1 bg-white absolute  right-0 top-0 rounded-full text-green ">{select.length}</div>
+                                    </div>
+                                    :
+                                    <FaBagShopping onClick={() => navigate('/cart')} className='text-xl  cursor-pointer' />
+                                }
+                            </div>
+                        }
 
                         <FaBarsStaggered onClick={() => setSideview(prev => !prev)} className='text-3xl md:hidden cursor-pointer' />
                     </div>
@@ -141,19 +152,29 @@ const Header = ({ closeDivRef, furniDiv, topDiv }) => {
                     {sideview &&
                         <div ref={refDiv} className="w-[60%] text-white fixed top-0 right-0 h-screen bg-top-bg transition-all ease-in-out delay-500 py-3 px-2 ">
                             <AiOutlinePlus onClick={() => setSideview(prev => !prev)} className='text-5xl cursor-pointer  rotate-45' />
-                            <div className="w-full h-fit py-5 rounded-xl px-10 ">
+                            {login ? <div className="w-full h-fit py-5 rounded-xl px-10 ">
                                 <div className="flex items-center flex-col gap-5 h-full py-5">
-                                    {headers.map((item, i) => {
+                                    {headers.slice(0,headers.length -1).map((item, i) => {
                                         return (
                                             <Link to={item.url} className=" cursor-pointer hover:border-b font-bold" key={i}>{item.title}</Link>
                                         )
                                     })}
                                 </div>
+                            </div>:
+                            <div className="w-full h-fit py-5 rounded-xl px-10 ">
+                            <div className="flex items-center flex-col gap-5 h-full py-5">
+                                {headers.map((item, i) => {
+                                    return (
+                                        <Link to={item.url} className=" cursor-pointer hover:border-b font-bold" key={i}>{item.title}</Link>
+                                    )
+                                })}
                             </div>
+                        </div>
+                            }
 
                             <div className="text-2xl text-gray font-bold w-full text-center">Other Links</div>
                             <ul className='w-full flex items-center gap-3 flex-col'>
-                                <li onClick={()=> setLogin(false)} className='cursor-pointer hover:border-b font-bold'>Logout</li>
+                                <li onClick={() => setLogin(false)} className='cursor-pointer hover:border-b font-bold'>Logout</li>
                             </ul>
                         </div>
                     }

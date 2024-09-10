@@ -30,8 +30,8 @@ export const formatter = new Intl.NumberFormat('en-US',{
         url: '/blogs'
     },
     {
-        title: 'Dashboard',
-        url: '/dashboard'
+        title: 'Login',
+        url: '/login'
     },
 ]
 
