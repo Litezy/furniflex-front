@@ -13,7 +13,7 @@ export default {
         'delivery':'#ffba35',
         'dark':'#424242',
         'gray':'#f5f5f5',
-        'green':'#517173',
+        'green':'#2d5356',
         'grey':'#d9d9d9',
         'aboutbg':'#faf4e9',
         'about':'#d2982b'

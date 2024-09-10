@@ -13,29 +13,13 @@ import Hassle from '../components/Hassle'
 import { useNavigate } from 'react-router-dom'
 
 const Billing = () => {
-  const { select, setSelect } = useSelect()
-  const [subtotal, setSubtotal] = useState([])
+  const { ship, login, select, setSelect, subtotal, total, discount, setDiscount, discountPrice, setDiscountPrice } = useSelect()
+
   const [selectcountry, setSelectCountry] = useState({})
   const navigate = useNavigate()
   const [openCountries, setOpenCountries] = useState(false)
-  const calculateSubtotal = (items) => {
-    let total = 0;
-    // Calculate total price based on each item's price and quantity
-    items.forEach(item => {
-      total += (item.price * item.quantity);
-    });
+  const [opendialogue, setOpendialogue] = useState(false)
 
-    // Update the state with the calculated total
-    setSubtotal(total);
-  }
-
-  useEffect(() => {
-    calculateSubtotal(select)
-  }, [select])
-
-  let ship = 5
-  let amount = Math.ceil((subtotal / 100) * 5)
-  let total = subtotal + amount
 
   const selectOneCountry = (index) => {
     setSelectCountry(prev => {
@@ -45,10 +29,35 @@ const Billing = () => {
     })
 
   }
+
+
+  const MakePayment = () => {
+    if (login === false) {
+      setOpendialogue(true)
+    } else {
+      navigate(`/cart/billing/checkout`)
+    }
+
+  }
   return (
     <Layout>
       <div className="w-full">
-        <div className="w-11/12 mx-auto">
+        <div className={`w-11/12 mx-auto relative }`}>
+          {opendialogue &&
+            <div className="w-fit px-10 fixed  bg-green h-fit py-5 -translate-x-1/2 top-60 left-1/2 flex items-center justify-center rounded-lg ">
+           <div className="">
+           <div className="">Kindly login to proceed with payment</div>
+           <div className="my-3">Login Now?</div>
+           <div className="flex items-center gap-5 w-full justify-center">
+            <button onClick={()=> navigate(`/login`)} className='w-1/2  py-1 rounded-xl bg-primary'>Yes</button>
+            <button onClick={()=> setOpendialogue(false)} className='w-1/2  py-1 rounded-xl bg-red-500'>No</button>
+           </div>
+           </div>
+            </div>
+
+
+          }
+
           <div className="flex w-full items-center justify-between text-dark">
             <div className=" font-extrabold text-2xl ">Billing Details</div>
             <div className="flex items-center gap-2">
@@ -56,8 +65,8 @@ const Billing = () => {
               <FaCheck className='text-xl text-[#ff5b5b] font-bold' />
             </div>
           </div>
-          <div className="flex items-start flex-col md:flex-row gap-10 w-full mt-5">
-            <div className="md:w-[70%] w-full text-dark h-fit pb-5">
+          <div className="flex items-start flex-col lg:flex-row gap-10 w-full mt-5">
+            <div className="lg:w-[70%] w-full text-dark h-fit pb-5">
               <form className='w-full flex items-start flex-col gap-8'>
                 <div className="flex w-full items-start flex-col md:flex-row gap-10 justify-between">
                   <div className="flex items-start w-full gap-5 flex-col md:w-1/2">
@@ -200,7 +209,7 @@ const Billing = () => {
 
 
 
-            <div className="md:w-[30%] w-full bg-gray h-fit pb-5 rounded-md">
+            <div className="lg:w-[30%] w-full bg-gray h-fit pb-5 rounded-md">
               <div className="w-full h-fit py-4 bg-green rounded-t-md">
                 <div className="ml-10 font-bold text-xl">Order Summary</div>
               </div>
@@ -214,18 +223,20 @@ const Billing = () => {
                     <div className="font-bold">Shipping</div>
                     <div className="">{ship}%</div>
                   </div>
-                  <div className="flex items-center w-fit gap-2 px-10 text-primary">
-                    <div className="font-bold ">Add coupon code</div>
-                    <IoIosArrowRoundForward className='text-2xl' />
-                  </div>
+                  {discount ? <div className="flex items-center w-full justify-between px-10 text-primary">
+                    <div className="font-bold ">Coupon discount</div>
+                    <div className="text-dark font-bold">{discountPrice}%</div>
+                  </div> :
+                    <div className=""></div>
+                  }
                   <div className="flex items-center bg-white w-full justify-between px-10 py-5">
-                    <div className="font-bold">Total</div>
+                    <div className="font-bold">Total Amount</div>
                     <div className="font-bold text-2xl">{formatter.format(total)}</div>
                   </div>
                   <div className="w-full px-3 flex items-center justify-between ">
-                    <button onClick={()=> navigate(`/cart/billing/checkout`)} className='text-center  bg-primary text-white py-2 px-3 rounded-full'
-                    >Proceed to checkput</button>
-                    <button className='text-white bg-[#616161] py-2 px-3 rounded-full'>Cancel</button>
+                    <button onClick={MakePayment} className='text-center  bg-primary text-white py-2 px-5 rounded-full'
+                    >Proceed to pay</button>
+                    <button className='text-white bg-[#616161] py-2 px-5 rounded-full'>Cancel</button>
                   </div>
                 </div>
               </div>

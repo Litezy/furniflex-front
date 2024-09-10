@@ -73,3 +73,52 @@ export const successMessage = (message) => {
         
     })
 }
+
+const dashMainHeaders = [
+    {
+        title:'Dashboard',
+        icons:''
+    },
+    {
+        title:'Products',
+        icons:''
+    },
+    {
+        title:'Customer',
+        icons:''
+    },
+    {
+        title:'Order',
+        icons:''
+    },
+    {
+        title:'Marketing',
+        icons:''
+    },
+]
+const dashCommsHeaders = [
+    {
+        title:'Chat',
+        icons:''
+    },
+    {
+        title:'Inbox',
+        icons:''
+    },
+    
+]
+const dashFeaturesHeaders = [
+    {
+        title:'File Manager',
+        icons:''
+    },
+    {
+        title:'Calendar',
+        icons:''
+    },
+    {
+        title:'Analytics',
+        icons:''
+    },
+    
+]

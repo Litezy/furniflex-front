@@ -9,11 +9,11 @@ import { MdOutlineCancel } from 'react-icons/md'
 
 const CheckoutSuccess = () => {
 
-    const { select, setselect } = useSelect()
+    const { select, setselect,subtotal,total } = useSelect()
     const [totalItems, setTotalItems] = useState()
     const [modal, setModal] = useState(false)
     const [quantity, setQuantity] = useState([])
-    const [amount, setAmout] = useState()
+   
 
     const checkTotalQuantity = (items) => {
         const quantities = select.reduce((acc, cur) => acc + cur.quantity, 0)
@@ -24,20 +24,12 @@ const CheckoutSuccess = () => {
         setQuantity(quantities)
     }
 
-    const calculateSubtotal = (items) => {
-        let total = 0;
-        // Calculate total price based on each item's price and quantity
-        items.forEach(item => {
-            total += (item.price * item.quantity);
-        });
-        setAmout(total);
-    }
+  
     useEffect(() => {
         checkTotalQuantity(select)
-        calculateSubtotal(select)
         checkQuantities(select)
     }, [select])
-    // console.log(select)
+
     return (
         <Layout>
             <div className={`w-full relative ${modal ? 'my-0' : 'my-10'}`}>
@@ -49,7 +41,7 @@ const CheckoutSuccess = () => {
                         <div className="text-[1.2rem] font-medium">Below are the details</div>
                     </div>
 
-                    <div className="w-2/4 mx-auto  my-5 bg-gray h-fit pb-5 rounded-md">
+                    <div className="lg:w-2/4 mx-auto  w-11/12 my-5 bg-gray h-fit pb-5 rounded-md">
                         <div className="w-full h-fit py-4 bg-green rounded-t-md">
                             <div className="ml-10 font-bold text-xl">Order Summary</div>
                         </div>
@@ -69,7 +61,7 @@ const CheckoutSuccess = () => {
                                 </div>
                                 <div className="flex items-center bg-white w-full justify-between px-10 py-5">
                                     <div className="font-bold">Total</div>
-                                    <div className="font-bold text-2xl">{formatter.format(amount)}</div>
+                                    <div className="font-bold text-2xl">{formatter.format(total)}</div>
                                 </div>
                                 <div onClick={() => setModal(prev => !prev)} className="w-full px-3  ">
                                     <button className='text-center w-full bg-primary text-white py-3 px-3 rounded-full'
@@ -81,7 +73,7 @@ const CheckoutSuccess = () => {
 
 
                     </div>
-                    <div className="my-10 text-dark flex items-start gap-3 w-2/4 mx-auto justify-center flex-col">
+                    <div className="my-10 text-dark flex  items-start gap-3 w-11/12 lg:w-2/4 mx-auto justify-center flex-col">
                         <div className="font-bold text-2xl">Order Status:</div>
                         <div className="flex flex-col items-start gap-4">
                             <div className="">Your order is now complete and will be processed for shipment. You will receive a confirmation email shortly with tracking information once your items have been dispatched.</div>
@@ -95,7 +87,7 @@ const CheckoutSuccess = () => {
                 </div>
                 {modal &&
                     <ModalLayout setModal={setModal} max={false}>
-                        <div className=" rounded-md   mt-5 py-8 mx-auto w-[90%] cursor-pointer  bg-white  ">
+                        <div className=" rounded-md   mt-5 py-8 mx-auto lg:w-[90%] w-full cursor-pointer  bg-white  ">
                             <div className="w-11/12 h-[27rem] overflow-y-auto  mx-auto     bg-gray ">
                                 <div className="w-full h-fit py-4 bg-green rounded-t-md">
                                     <div className="ml-10 font-bold text-xl ">Order Summary</div>
@@ -173,7 +165,7 @@ const CheckoutSuccess = () => {
                                     <div className="flex flex-col items-start gap-4 mt-5">
                                         <div className="flex items-center bg-white rounded-lg w-1/2 mx-auto justify-between px-10 py-5">
                                             <div className="font-bold text-xl">Total</div>
-                                            <div className="font-bold text-2xl">{formatter.format(amount)}</div>
+                                            <div className="font-bold text-2xl">{formatter.format(total)}</div>
                                         </div>
                                         <div onClick={() => setModal(prev => !prev)} className="w-1/2 mx-auto px-3  ">
                                             <button className='text-center w-full bg-primary text-white py-3 px-3 rounded-full'

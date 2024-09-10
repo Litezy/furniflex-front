@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { headers, MoveToTop } from '../assets/utils/functions';
 import { useSelect } from '../context/SelectContext';
+import profileImg from '../assets/images/ceo.jpg'
 
 
 const Header = ({ closeDivRef, furniDiv, topDiv }) => {
@@ -118,7 +119,7 @@ const Header = ({ closeDivRef, furniDiv, topDiv }) => {
                         </div>
                         {login ? <div className="md:flex items-center justify-between lg:w-[12%] w-[15%] hidden ">
                             <FiSearch className='text-xl cursor-pointer' />
-                            <MdOutlineFavoriteBorder className='text-xl cursor-pointer' />
+                            <img src={profileImg} className='w-10 h-10 rounded-full bg-cover' alt="" />
                             {Array.isArray(select) && select.length > 0 ?
                                 <div className="relative flex itrems-start  w-8 py-2 ">
                                     <FaBagShopping onClick={() => navigate('/cart')} className='text-xl cursor-pointer' />

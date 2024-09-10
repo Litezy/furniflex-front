@@ -11,13 +11,10 @@ import Hassle from '../components/Hassle';
 
 const ShopCart = ({ }) => {
 
-  const { select, setSelect } = useSelect()
-  const [subtotal, setSubtotal] = useState([])
+  const { ship,select, setSelect, subtotal, total, discount, setDiscount, discountPrice, setDiscountPrice} = useSelect()
+  
   const navigate = useNavigate()
-  const [discountPrice, setDiscountPrice] = useState(2)
   const [coupon, setCoupon] = useState(false)
-  const [total, setTotal] = useState(null)
-  const [discount, setDiscount] = useState(false)
   let codes = [
     '224455', '224456', '224457', '224458', '224459', '00000', '11111'
   ]
@@ -71,28 +68,28 @@ const ShopCart = ({ }) => {
     setSelect((prevSelect) => prevSelect.filter((item) => item.id !== itemId));
 
   }
-  let ship = 5
-  const calculateSubtotal = (items) => {
-    let total = 0;
-    // Calculate total price based on each item's price and quantity
-    items.forEach(item => {
-      total += (item.price * item.quantity);
-    });
-    setSubtotal(total);
+  // let ship = 5
+  // const calculateSubtotal = (items) => {
+  //   let total = 0;
+  //   // Calculate total price based on each item's price and quantity
+  //   items.forEach(item => {
+  //     total += (item.price * item.quantity);
+  //   });
+  //   setSubtotal(total);
     
-    let shippingAmount = Math.ceil((total / 100) * ship);
+  //   let shippingAmount = Math.ceil((total / 100) * ship);
 
-    if (discount) {
-      let discountAmount = Math.ceil((total / 100) * discountPrice);
-      setTotal(total - discountAmount + shippingAmount);
-    } else {
-      setTotal(total + shippingAmount);
-    }
-  }
+  //   if (discount) {
+  //     let discountAmount = Math.ceil((total / 100) * discountPrice);
+  //     setTotal(total - discountAmount + shippingAmount);
+  //   } else {
+  //     setTotal(total + shippingAmount);
+  //   }
+  // }
 
-  useEffect(() => {
-    calculateSubtotal(select)
-  }, [select,discount])
+  // useEffect(() => {
+  //   calculateSubtotal(select)
+  // }, [select,discount])
 
 
   // if (discount) {
