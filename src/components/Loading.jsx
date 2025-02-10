@@ -4,7 +4,7 @@ import './loading.css'
 const Loading = () => {
     
   return (
-    <div className='loader '></div>
+    <span class="loader"></span>
   )
 }
 

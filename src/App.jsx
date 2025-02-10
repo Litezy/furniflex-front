@@ -12,6 +12,7 @@ import Billing from './Hompage/Billing';
 import CheckoutSuccess from './Hompage/CheckoutSuccess';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 
 
@@ -38,6 +39,7 @@ function App() {
               <Route path='/contact' element={<Contact />} />
               <Route path='/blogs' element={<Blogs />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/signup' element={<Signup/>} />
               <Route path='/dashboard' element={<Dashboard />} />
             </Routes>
           </Router>

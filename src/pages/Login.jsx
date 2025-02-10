@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Layout from '../components/Layout'
 import InputTag from '../components/InputTag'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { errorMessage } from '../assets/utils/functions'
 import { useSelect } from '../context/SelectContext'
 import Loading from '../components/Loading'
@@ -63,8 +63,8 @@ const Login = () => {
                         <button className='w-full py-3 text-white text-lg'>Login</button>
                     </div>
                     <div className="flex items-start flex-col w-11/12 mx-auto">
-                        <div className="">Don't have account? <span className='font-bold text-green cursor-pointer '>Sign Up</span></div>
-                        <div className="">Back to <span onClick={() => navigate(`/`)} className='cursor-pointer font-bold text-green'>Home</span></div>
+                        <div className="">Don't have account? <Link to={`/signup`} className='font-bold text-green cursor-pointer '>Sign Up</Link></div>
+                        <div className="">Back to <Link to={`/`} className='cursor-pointer font-bold text-green'>Home</Link></div>
                     </div>
                 </form>}
         </div>

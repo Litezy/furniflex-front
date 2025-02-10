@@ -10,7 +10,7 @@ const InputTag = ({ formtype = 'text', placeholder,name,value,onchange }) => {
     const Icon = open ? VscEyeClosed: VscEye
     return (
         <div className='w-full'>
-            {formtype === 'text' && <input type="text" className='w-full border-gray border-2 h-12 rounded-lg outline-none pl-2' placeholder={placeholder} />}
+            {formtype === 'text' && <input type="text" className='w-full border-gray font-semibold  border-2 h-12 rounded-lg outline-none pl-2' value={value} name={name} onChange={onchange} placeholder={placeholder} />}
             {formtype === 'email' && <input type="email" value={value} name={name} onChange={onchange} className='w-full tracking-wide border-gray border-2 h-12 font-normal rounded-lg outline-none pl-2' placeholder={placeholder} />}
             {formtype === 'phone' && <input type="number" className='w-full border-gray border-2 h-12 rounded-lg outline-none pl-2' placeholder={placeholder} />}
             {formtype === 'country' &&

@@ -39,7 +39,7 @@ const ShopCart = ({ }) => {
       errorMessage('code is not a valid coupon code')
       setTimeout(() => {
         setCoupon(false)
-      }, 5000)
+      }, 3000)
       setCouponCode({
         code: ''
       })

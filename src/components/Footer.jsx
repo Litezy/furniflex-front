@@ -47,7 +47,7 @@ const Footer = () => {
                 <div className=" w-full flex    items-start gap-8 lg:gap-20   ">
                     {links.map((item, i) => {
                         return (
-                            <div className="flex  mx-auto text-dark lg:items-center lg:justify-between  " key={i}>
+                            <div className="flex  mx-auto text-dark lg:items-center lg:justify-between " key={i}>
                                 <div className="">
                                     <h1 className='font-bold text-xl'>{item.title}</h1>
                                     {item.link.map((val, index) => (

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
-import { IoChevronUp } from "react-icons/io5";
 import { avail, categories, colors, formatter, martial, successMessage } from '../assets/utils/functions';
 import { MdOutlineFavorite } from 'react-icons/md';
 import { BsFillCartDashFill } from 'react-icons/bs';
@@ -10,7 +9,7 @@ import Loading from '../components/Loading';
 import { useSelect } from '../context/SelectContext';
 import Hassle from '../components/Hassle';
 
-
+export const LocalName = 'products'
 const Products = ({ }) => {
   const [active, setActive] = useState('')
   const [mart, setMart] = useState('')
@@ -23,6 +22,7 @@ const Products = ({ }) => {
   const [openprice, setOpenPrice] = useState(false)
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
+  const [localStore, setLocalStore] = useState([])
 
   const Icon1 = opencat ? FaChevronUp : FaChevronDown
   const Icon2 = openprice ? FaChevronUp : FaChevronDown
@@ -44,12 +44,14 @@ const Products = ({ }) => {
     setAval(name)
   }
 
+
   const fetchItems = useCallback(
     async () => {
       try {
         const response = await fetch('https://dummyjson.com/products');
         const data = await response.json()
         setData(data.products);
+        localStorage.setItem(LocalName, JSON.stringify(data.products))
       } catch (error) {
         console.error('Error fetching items:', error);
       }
@@ -77,6 +79,7 @@ const Products = ({ }) => {
 
 
 
+  const [inArray, setInArray] = useState([])
   const filteredData = filterItems()
   const [itemsfilter, setItemsfilter] = useState({})
   const { select, setSelect } = useSelect()
@@ -87,6 +90,7 @@ const Products = ({ }) => {
       return select
     })
   }
+ 
   const AddItems = () => {
     setSelect((prevSelect) => {
       const itemsToAdd = itemsfilter[0]
@@ -95,11 +99,20 @@ const Products = ({ }) => {
         successMessage('item already selected')
         return prevSelect
       } else {
+        setInArray((prev) => [...prev, itemsToAdd.id]);
         return [...prevSelect, { ...itemsToAdd, quantity: 1 }]
       }
     })
   }
 
+
+  useEffect(()=>{
+    const getProducts = ()=>{
+      const storedProducts = JSON.parse(localStorage.getItem(LocalName))
+      setLocalStore(storedProducts)
+    }
+    getProducts()
+  },[data])
   return (
     <Layout>
       <div className="my-10 w-full h-full">
@@ -274,7 +287,7 @@ const Products = ({ }) => {
               {loading ? <div className="h-full w-full flex items-center justify-center">
                 <Loading />
               </div> : <div className="grid mt-4 w-full  grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-                {filteredData && filteredData.map((item) => {
+                {localStore && localStore.map((item) => {
                   // const isEven = 
                   return (
                     <div className="bg-gray w-[100%] mx-auto h-fit rounded-md pt-3" key={item.id}>
@@ -298,8 +311,11 @@ const Products = ({ }) => {
                             <div className="">{item.title}</div>
                             <div className="">{formatter.format(item.price)}</div>
                           </div>
-                          <div onClick={AddItems} onMouseOver={() => selectProduct(item.id)}  className="cursor-pointer px-4 py-4 rounded-full bg-white flex items-center justify-center">
-                            <BsFillCartDashFill  className='text-primary text-2xl ' />
+                          <div onClick={AddItems} onMouseOver={() => selectProduct(item.id)} className={`cursor-pointer px-4 py-4 rounded-full relative flex bg-white items-center justify-center`}>
+                          {inArray.includes(item.id) &&  
+                          <div className="p-1 rounded-full top-2 bg-red-600 absolute "></div>
+                          }
+                            <BsFillCartDashFill className='text-primary text-2xl ' />
                           </div>
                         </div>
                       </div>
